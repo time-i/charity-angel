@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whu.charityangel.mapper.UserMapper">
+    <select id="getUserByName" resultType="com.whu.charityangel.model.entity.User">
+        select * from user where  name=#{userName}
+    </select>
+
+    <select id="getRoleByName" resultType="com.whu.charityangel.model.entity.Role">
+        select * from role where  role_name=#{roleName}
+    </select>
+
+    <!-- 查询用户的所有权限 -->
+    <select id="queryAllPerms" resultType="string">
+        select DISTINCT p.permission from permission p
+        LEFT JOIN role_permission rm on rm.permission_id = p.id
+        LEFT JOIN user_role ur on ur.role_id = rm.role_id
+        where ur.user_id = #{userId}
+    </select>
+
+    <update id="updatePassword" parameterType="string">
+        UPDATE user
+        SET password = #{newPassword},salt = #{salt}
+        WHERE name = #{username}
+    </update>
+
+
+</mapper>

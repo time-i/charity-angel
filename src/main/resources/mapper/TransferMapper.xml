@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whu.charityangel.mapper.TransferMapper">
+<!--    更新捐款人账户-->
+    <update id="updateSource" parameterType="com.whu.charityangel.mapper.TransferMapper">
+        update account
+        <set>
+            money=money-#{money}
+        </set>
+        where id=#{from}
+    </update>
+
+<!--    更新项目账户-->
+    <update id="updateDestination" parameterType="com.whu.charityangel.mapper.TransferMapper">
+        update account
+        <set>
+            money=money+#{money}
+        </set>
+        where id=#{to}
+    </update>
+
+<!--    查询当前账户捐款信息-->
+    <select id="queryMyRecord" resultType="com.whu.charityangel.model.entity.Transfer" parameterType="long">
+<!--        select `to`,`money`,`date_time`-->
+        select *
+        from transfer
+        where `from`=#{from}
+    </select>
+
+
+
+</mapper>
